@@ -1,0 +1,14 @@
+import logging
+
+error_logger = logging.getLogger()
+
+def sendmail(data):
+	...
+
+...
+	try:
+		data = response.data
+		sendmail(data)
+	except Exception as e: 
+	    error_logger.error(str(e) + "|" + str(data))
+...
