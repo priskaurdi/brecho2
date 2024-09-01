@@ -11,3 +11,12 @@ __pycache__/
 # Ignore arquivos de sistema
 .DS_Store
 Thumbs.db
+
+# Ignore o static
+static/
+
+# Ignore o .env
+.env/
+
+# Ignore pi2, arquivos para relatorio univesp
+pi2/
