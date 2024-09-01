@@ -81,7 +81,7 @@ THIRD_APPS = [
     'corsheaders',
 ]
 PROJECT_APPS = [
-    # 'apps.base',
+    'apps.base',
     # 'apps.myapp',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
