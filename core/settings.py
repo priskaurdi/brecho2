@@ -84,6 +84,7 @@ THIRD_APPS = [
 PROJECT_APPS = [
     'apps.base',
     'apps.pages',
+	'apps.contas',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
 
@@ -140,6 +141,9 @@ DATABASES = {
 
 	}
 }
+
+
+AUTH_USER_MODEL = "contas.MyUser"
 
 
 # Password validation
