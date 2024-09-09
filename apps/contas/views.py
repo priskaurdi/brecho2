@@ -40,7 +40,9 @@ def register_view(request):
         if form.is_valid():
             usuario = form.save(commit=False)
             usuario.is_valid = False
-            usuario.save()
+            usuario.save(
+                
+            Perfil.objects.create(usuario=usuario) # Cria instancia perfil do usuário
             
             group = Group.objects.get(name='usuario')
             usuario.groups.add(group)
