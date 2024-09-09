@@ -2,7 +2,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
-from contas.forms import CustomUserCreationForm
+from contas.forms import CustomUserCreationForm, UserChangeForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from contas.models import MyUser
 
 # Create your views here.
 
@@ -57,3 +60,28 @@ def register_view(request):
     return render(request, "register.html",{"form": form})
 
 
+@login_required()
+def atualizar_meu_usuario(request):
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Seu perfil foi atualizado com sucesso!')
+            return redirect('home')
+    else:
+        form = UserChangeForm(instance=request.user)
+    return render(request, 'user_update.html', {'form': form})
+
+
+@login_required()
+def atualizar_usuario(request, user_id):
+    user = get_object_or_404(MyUser, pk=user_id)
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'O perfil de usuário foi atualizado com sucesso!')
+            return redirect('home')
+    else:
+        form = UserChangeForm(instance=user)
+    return render(request, 'user_update.html', {'form': form})
