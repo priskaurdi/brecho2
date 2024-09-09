@@ -71,6 +71,7 @@ if not DEBUG:
 
 # Aplicativos do django
 DJANGO_APPS = [
+	'apps.contas', # Adiciona 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +85,6 @@ THIRD_APPS = [
 PROJECT_APPS = [
     'apps.base',
     'apps.pages',
-	'apps.contas',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
 
@@ -145,6 +145,9 @@ DATABASES = {
 
 
 AUTH_USER_MODEL = "contas.MyUser"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Password validation

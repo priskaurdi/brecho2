@@ -1,14 +1,19 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
-from contas.forms import CustomUserCreationForm 
+from contas.forms import CustomUserCreationForm
 
 # Create your views here.
 
 #Rota timeout (Desconectado por inatividade)
 def timeout_view(request):
     return render(request, 'timeout.html')
+
+#Logout
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 #Login
 def login_view(request):
@@ -48,3 +53,5 @@ def register_view(request):
                 1 caractere especial e no minimo 8 caracteres.')
     form = CustomUserCreationForm()
     return render(request, "register.html",{"form": form})
+
+
