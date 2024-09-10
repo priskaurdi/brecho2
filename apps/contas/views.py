@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
+from perfil.models import Perfil
 from contas.forms import CustomUserCreationForm, UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -45,12 +46,12 @@ def register_view(request):
         if form.is_valid():
             usuario = form.save(commit=False)
             usuario.is_valid = False
-            usuario.save(
-                
-            Perfil.objects.create(usuario=usuario) # Cria instancia perfil do usuário
+            usuario.save()
             
             group = Group.objects.get(name='usuario')
             usuario.groups.add(group)
+
+            Perfil.objects.create(usuario=usuario) # Cria instancia perfil do usuário
             
             messages.success(request, 'Registrado. Agora faça o login para começar!')
             return redirect('login')
