@@ -49,3 +49,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         super(MyUser, self).save(*args, **kwargs)
 
 
+force_change_password = models.BooleanField(default=False)
+
+def requires_password_change(self):
+        return self.force_change_password

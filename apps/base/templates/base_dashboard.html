@@ -57,12 +57,10 @@
             <button type="button" class="btn btn-light"><i class="fas fa-file-alt me-2"></i>Relatórios</button>
             
             {% if perms.contas.view_myuser %}
-                <button type="button" class="btn btn-light" 
-                    onclick="location.href='{% url 'lista_usuarios' %}'">
-                    <i class<li><a href="{% url 'lista_usuarios' %}">Lista Todos usuários</a>
-                    </li>="fas fa-users me-2"></i>Usuários do Sistema</button>
+                <button type="button" class="btn btn-light" onclick="location.href='{% url 'lista_usuarios' %}'">
+                        <i class="fas fa-users me-2"></i>Usuários do Sistema</button>
             {% endif %}
-            
+
             <button type="button" class="btn btn-light" 
                 onclick="location.href='{% url 'configuracao' %}'">
                 <i class="fas fa-cog me-2"></i>Configurações</button>
