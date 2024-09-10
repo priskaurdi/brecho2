@@ -10,8 +10,8 @@ class Command(BaseCommand):
         for user in myuser:
              
             get_email = user.email.split("@")[0]
-            email = re.sub(r"[^a-zA-Z0-9]","",get_email)
-            user.username = email
+            username = re.sub(r"[^a-zA-Z0-9]","",get_email)
+            user.username = username
             user.save()
 
             self.stdout.write(
