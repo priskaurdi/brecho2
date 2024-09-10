@@ -20,15 +20,16 @@ class CustomUserCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        if self.user.is_authenticated:
+            del self.fields['password1']
+            del self.fields['password2']
         for field_name, field in self.fields.items():
             if field.widget.__class__ in [forms.CheckboxInput, forms.RadioSelect]:
                 field.widget.attrs['class'] = 'form-check-input'
             else:
                 field.widget.attrs['class'] = 'form-control'
             
-            if self.user.is_authenticated:
-                del self.fields['password1']
-                del self.fields['password2']
+            
     
     def clean_password2(self):
         # Check that the two password entries match

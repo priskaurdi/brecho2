@@ -32,6 +32,7 @@ def login_view(request):
         print(user)
         if user is not None:
             login(request, user)
+
             if user.is_authenticated and user.requires_password_change(): # Verifica
                 msg = 'Olá '+user.first_name+', como você pode perceber atualmente \
                         a sua senha é 123 cadastrado. Recomendamos fortemente \
@@ -42,6 +43,7 @@ def login_view(request):
                 return redirect('force_password_change') # Vai para rota de alterar senha.
             else:
                 return redirect('home')
+            
         else:
             messages.error(request, 'Email ou senha inválidos')
     if request.user.is_authenticated:
@@ -70,7 +72,7 @@ def register_view(request):
             # Tratar quando usuario já existe, senhas... etc...
             messages.error(request, 'A senha deve ter pelo menos 1 caractere maiúsculo, \
                 1 caractere especial e no minimo 8 caracteres.')
-    form = CustomUserCreationForm()
+    form = CustomUserCreationForm(user=request.user)
     return render(request, "register.html",{"form": form})
 
 
@@ -116,8 +118,8 @@ def adicionar_usuario(request):
     perfil_form = PerfilForm(user=request.user)
 
     if request.method == 'POST':
-        user_form = CustomUserCreationForm(request.POST)
-        perfil_form = PerfilForm(request.POST, request.FILES)
+        user_form = CustomUserCreationForm(request.POST, user=request.user)
+        perfil_form = PerfilForm(request.POST, request.FILES, user=request.user)
 
         if user_form.is_valid() and perfil_form.is_valid():
             # Salve o usuário
