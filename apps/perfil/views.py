@@ -8,18 +8,20 @@ from base.utils import filtrar_modelo
 def perfil_view(request, username):
     modelo = MyUser.objects.select_related('perfil').prefetch_related('user_postagem_forum')
     perfil = get_object_or_404(modelo, username=username)
+
     perfil_postagens = perfil.user_postagem_forum.all() # Todas as postagens relacionadas com perfil
-    form_dict = {}
     filtros = {} # Filtro dict
 
-    titulo_busca = request.GET.get("titulo") # Pego parametro
-    if titulo_busca:
-        filtros["titulo"] = titulo_busca # Adiciono no dicionario
+    valor_busca = request.GET.get("titulo") # Pego parametro
+    if valor_busca:
+        filtros["titulo"] = valor_busca # Adiciono no dicionario
+        filtros["descricao"] = valor_busca # Adiciono no dicionario
         
-    # Utiliza o modelo das postagens do perfil
-    perfil_postagens = filtrar_modelo(perfil_postagens.model, **filtros) # Faz o filtro
+        # Utiliza o modelo das postagens do perfil
+        perfil_postagens = filtrar_modelo(perfil_postagens, **filtros) # Faz o filtro
 
-    for el in perfil.user_postagem_forum.all():
+    form_dict = {}
+    for el in perfil_postagens:
         form = PostagemForumForm(instance=el) 
         form_dict[el] = form
     

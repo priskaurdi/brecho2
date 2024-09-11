@@ -23,7 +23,7 @@
 				<th scope="col">Acão</th>
 			</tr>
 		</thead>
-		{% for usuario in lista_usuarios %}
+		{% for usuario in page_obj %}
 		<tbody>
 			<tr>
                 <td scope="row">{{ usuario.id }}</td>

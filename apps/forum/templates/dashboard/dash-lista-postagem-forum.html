@@ -35,7 +35,7 @@
                     <th scope="col">Acão</th>
                 </tr>
             </thead>
-            {% for postagem, form in form_dict.items %} # Adiciona
+            {% for postagem, form in form_dict.items %} 
             <tbody>
                 <tr>
                     <td scope="row">{{ postagem.id }}</td>
@@ -67,5 +67,6 @@
             {% endfor %}
         </table>
     </div>
+    {% include 'components/paginacao.html' %}
 </div>
 {% endblock %}

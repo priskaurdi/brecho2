@@ -3,6 +3,9 @@ from django.forms import ValidationError
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.utils.text import slugify
+import random
+import string
 
 user = get_user_model()
 
@@ -17,6 +20,15 @@ class PostagemForum(models.Model):
     ativo = models.BooleanField('Publicar Postagem?', default=False)
     # anexar_imagem = models.ImageField('Imagem Anexo', upload_to='postagem-forum/', blank=True, null=True)
     
+    slug = models.SlugField(unique=True, null=True)  # Campo de slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:  # Executa apenas se o campo 'slug' estiver vazio
+            slug_base = slugify(self.titulo)  # Gera o slug com base no título
+            random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))  # Gera uma string aleatória de 5 caracteres
+            self.slug = f"{slug_base}-{random_string}"  # Adiciona a string aleatória ao slug base
+	    super().save(*args, **kwargs)
+
     def __str__(self):
         return "{} ({})".format(self.titulo, self.data_publicacao)
     

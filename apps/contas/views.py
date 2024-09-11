@@ -146,7 +146,7 @@ def atualizar_usuario(request, username):
 @grupo_colaborador_required(['administrador','colaborador'])
 def lista_usuarios(request):
     lista_usuarios = MyUser.objects.select_related('perfil').filter(is_superuser=False)
-    paginacao = Paginator(lista_usuarios, 3)
+    paginacao = Paginator(lista_usuarios, 5)
     pagina_numero = request.GET.get("page")
     page_obj = paginacao.get_page(pagina_numero)
     context = {'page_obj': page_obj}
