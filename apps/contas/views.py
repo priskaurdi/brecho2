@@ -13,7 +13,7 @@ from contas.models import MyUser
 from contas.permissions import grupo_colaborador_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
-
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -141,11 +141,16 @@ def atualizar_usuario(request, username):
     return render(request, 'user_update.html', {'form': form})
 
 
+
 @login_required
 @grupo_colaborador_required(['administrador','colaborador'])
-def lista_usuarios(request): # Lista Cliente 
-    lista_usuarios = MyUser.objects.select_related('perfil').filter(is_superuser=False) 
-    return render(request, 'lista-usuarios.html', {'lista_usuarios': lista_usuarios})
+def lista_usuarios(request):
+    lista_usuarios = MyUser.objects.select_related('perfil').filter(is_superuser=False)
+    paginacao = Paginator(lista_usuarios, 3)
+    pagina_numero = request.GET.get("page")
+    page_obj = paginacao.get_page(pagina_numero)
+    context = {'page_obj': page_obj}
+    return render(request, 'lista-usuarios.html', context)
 
 
 @login_required

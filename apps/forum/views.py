@@ -6,29 +6,47 @@ from django.contrib import messages
 from forum import models
 from base.utils import add_form_errors_to_messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from base.filtros import filtrar_modelo
 
 # Lista de postagem
 def lista_postagem_forum(request):
     form_dict = {}
-    if request.path == '/forum/': # Pagina forum da home, mostrar tudo ativo.
+    filtros = {}
+
+    titulo_busca = request.GET.get("titulo")
+    if titulo_busca:
+        filtros["titulo"] = titulo_busca
+
+    if request.path == '/forum/':
         postagens = models.PostagemForum.objects.filter(ativo=True)
-        template_view = 'lista-postagem-forum.html' # lista de post da rota /forum/
-    else: # Essa parte mostra no Dashboard
-        user = request.user 
-        lst_grupos = ['administrador', 'colaborador']
-        template_view = 'dashboard/dash-lista-postagem-forum.html' # template novo que vamos criar 
-        if any(grupo.name in lst_grupos for grupo in user.groups.all()) or user.is_superuser:
-            # Usuário é administrador ou colaborador, pode ver todas as postagens
-            postagens = models.PostagemForum.objects.all()
+        template_view = 'lista-postagem-forum.html'
+    else:
+        user = request.user
+        template_view = 'dashboard/dash-lista-postagem-forum.html'
+        if ['administrador', 'colaborador'] in user.groups.all() or user.is_superuser:
+            postagens = models.PostagemForum.objects.filter(ativo=True)
         else:
-            # Usuário é do grupo usuário, pode ver apenas suas próprias postagens
-            postagens = models.PostagemForum.objects.filter(usuario=user)
-    # Como existe uma lista de objetos, para aparecer o formulário 
-	# correspondente no modal precisamos ter um for
+            postagens = filtrar_modelo(models.PostagemForum, **filtros)
+        
     for el in postagens:
         form = PostagemForumForm(instance=el) 
-        form_dict[el] = form
-    context = {'postagens': postagens,'form_dict': form_dict}
+        form_dict[el] = form 
+        
+    # Criar uma lista de tuplas (postagem, form) a partir do form_dict
+    form_list = [(postagem, form) for postagem, form in form_dict.items()]
+    
+    # Aplicar a paginação à lista de tuplas
+    paginacao = Paginator(form_list, 3) # '3' é numero de registro por pagina
+    
+    # Obter o número da página a partir dos parâmetros da URL
+    pagina_numero = request.GET.get("page")
+    page_obj = paginacao.get_page(pagina_numero)
+    
+    # Criar um novo dicionário form_dict com base na página atual
+    form_dict = {postagem: form for postagem, form in page_obj}
+    
+    context = {'page_obj': page_obj, 'form_dict': form_dict}
     return render(request, template_view, context)
 
 
@@ -90,7 +108,7 @@ def editar_postagem_forum(request, id):
             else: 
                 form.save()
                 for f in postagem_imagens: # for para pegar as imagens e salvar.
-                    models.PostagemForumImagem.objects.create(postagem=form, imagem=f)
+                    models.PostagemForumImagem.objects.create(postagem=postagem, imagem=f)
                     
                 messages.warning(request,message)
                 return redirect(redirect_route)
@@ -117,9 +135,9 @@ def deletar_postagem_forum(request, id):
 
 def remover_imagem(request):
     imagem_id = request.GET.get('imagem_id') # Id da imagem
-    verifica_imagem = models.PostagemForumImage.objects.filter(id=imagem_id) # Filtra pra ver se imagem existe...
+    verifica_imagem = models.PostagemForumImagem.objects.filter(id=imagem_id) # Filtra pra ver se imagem existe...
     if verifica_imagem:
-        postagem_imagem = models.PostagemForumImage.objects.get(id=imagem_id) # pega a imagem
+        postagem_imagem = models.PostagemForumImagem.objects.get(id=imagem_id) # pega a imagem
         # Excluir a imagem do banco de dados e do sistema de arquivos (pasta postagem-forum/)
         postagem_imagem.imagem.delete()
         postagem_imagem.delete()
