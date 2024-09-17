@@ -40,7 +40,7 @@ def lista_postagem_forum(request):
 
     if data_inicio and data_fim:
         filtros["data_publicacao__range"] = [data_inicio, data_fim]
-        
+
 
     if request.path == '/forum/':
         postagens = models.PostagemForum.objects.filter(ativo=True)
@@ -151,10 +151,9 @@ def deletar_postagem_forum(request, slug):
     if request.method == 'POST':
         postagem.delete()
         messages.error(request, message)
-        
-	if re.search(r'/forum/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
-            return redirect('lista-postagem-forum')
-        return redirect(redirect_route)
+    if re.search(r'/forum/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
+        return redirect('lista-postagem-forum')
+    return redirect(redirect_route)
 
     return JsonResponse({'status':message})
 

@@ -59,6 +59,7 @@ def login_view(request):
 def register_view(request):
     if request.user.is_authenticated:
         return redirect('home')
+    
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, user=request.user)
         if form.is_valid():

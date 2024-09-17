@@ -35,22 +35,20 @@ class CustomUserCreationForm(forms.ModelForm):
             else:
                 field.widget.attrs['class'] = 'form-control'
             
-    
-
     def clean_password1(self):
-		password1 = self.cleaned_data.get('password1')
-		if len(password1) < 8:
-			raise forms.ValidationError("A senha deve conter pelo menos 8 caracteres.")
+        password1 = self.cleaned_data.get('password1')
+        if len(password1) < 8:
+            raise forms.ValidationError("A senha deve conter pelo menos 8 caracteres.")
 			
-		# Verifique se a senha contém pelo menos uma letra maiúscula, uma letra minúscula e um caractere especial
-		maiusculas=re.search(r'[A-Z]', password1)
-		minusculas=re.search(r'[a-z]', password1)
-		caract_esp=re.search(r'[!@#$%^&*(),.?":{}|<>]', password1)
-		if not maiusculas or not minusculas or not caract_esp:
-			raise forms.ValidationError("A senha deve conter \
-												pelo menos 8 caracteres, uma letra maiúscula, uma letra \
-												minúscula e um caractere especial.")
-		return password1        
+        # Verifique se a senha contém pelo menos uma letra maiúscula, uma letra minúscula e um caractere especial
+        maiusculas=re.search(r'[A-Z]', password1)
+        minusculas=re.search(r'[a-z]', password1)
+        caract_esp=re.search(r'[!@#$%^&*(),.?":{}|<>]', password1)
+        if not maiusculas or not minusculas or not caract_esp:
+            raise forms.ValidationError("A senha deve conter \
+                                                    pelo menos 8 caracteres, uma letra maiúscula, uma letra \
+                                                    minúscula e um caractere especial.")
+        return password1        
     
     def clean_password2(self):
         # Check that the two password entries match
@@ -94,7 +92,7 @@ class UserChangeForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None) # get the 'user' from kwargs dictionary
-	    super(UserChangeForm, self).__init__(*args, **kwargs)
+        super(UserChangeForm, self).__init__(*args, **kwargs)
 
         if not self.user.groups.filter(name__in=['administrador','colaborador']).exists():
             for group in ['is_active']: 

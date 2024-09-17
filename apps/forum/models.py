@@ -35,7 +35,7 @@ class PostagemForum(models.Model):
             slug_base = slugify(self.titulo)  # Gera o slug com base no título
             random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))  # Gera uma string aleatória de 5 caracteres
             self.slug = f"{slug_base}-{random_string}"  # Adiciona a string aleatória ao slug base
-	    super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class PostagemForumImagem(models.Model):
