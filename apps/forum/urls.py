@@ -8,7 +8,14 @@ urlpatterns = [
     path('detalhe-postagem-forum/<str:slug>/', views.detalhe_postagem_forum, name='detalhe-postagem-forum'),
     path('editar-postagem-forum/<str:slug>/', views.editar_postagem_forum, name='editar-postagem-forum'),
     path('deletar-postagem-forum/<str:slug>/', views.deletar_postagem_forum, name='deletar-postagem-forum'),
+    
 
     #AJAX
     path('remover-imagem/', views.remover_imagem, name='remover-imagem'),
+
+    #Comentarios
+    path('adicionar-comentario/<str:slug>/', views.adicionar_comentario, name='adicionar-comentario'),
+    path('editar-comentario/<int:comentario_id>/', views.editar_comentario, name='editar-comentario'),
+    path('deletar-comentario/<int:comentario_id>/', views.deletar_comentario, name='deletar-comentario'),
+    path('responder-comentario/<int:comentario_id>/', views.responder_comentario, name='responder-comentario'),
 ]

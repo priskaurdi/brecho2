@@ -1,7 +1,7 @@
 import re
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from forum.forms import PostagemForumForm
+from forum.forms import PostagemForumComentarioForm, PostagemForumForm
 from django.contrib import messages 
 from forum import models
 from base.utils import add_form_errors_to_messages, filtrar_modelo
@@ -105,7 +105,10 @@ def criar_postagem_forum(request):
 def detalhe_postagem_forum(request, slug):
     postagem = get_object_or_404(models.PostagemForum, slug=slug)
     form = PostagemForumForm(instance=postagem)
-    context = {'form': form, 'postagem': postagem}
+    form_comentario = PostagemForumComentarioForm()
+    context = {'form': form,
+               'postagem': postagem,
+               'form_comentario':form_comentario}
     return render(request,'detalhe-postagem-forum.html', context)
 
 
@@ -167,3 +170,57 @@ def remover_imagem(request):
         postagem_imagem.imagem.delete()
         postagem_imagem.delete()
     return JsonResponse({'message': 'Imagem removida com sucesso.'})
+
+
+##Comentarios
+def adicionar_comentario(request, slug):
+    postagem = get_object_or_404(models.PostagemForum, slug=slug)
+    message = 'Comentário Adicionado com sucesso!'
+    if request.method == 'POST':
+        form = PostagemForumComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.usuario = request.user
+            comentario.postagem = postagem
+            comentario.save() 
+            messages.warning(request, message)
+            return redirect('detalhe-postagem-forum', slug=postagem.slug)
+    return JsonResponse({'status': message})
+
+
+def editar_comentario(request, comentario_id):
+    comentario = get_object_or_404(models.PostagemForumComentario, id=comentario_id)
+    message = 'Comentário Editado com sucesso!'
+    if request.method == 'POST':
+        form = PostagemForumComentarioForm(request.POST, instance=comentario)
+        if form.is_valid():
+            form.save()
+            messages.info(request, message)
+            return redirect('detalhe-postagem-forum',
+                            slug=comentario.postagem.slug)
+    return JsonResponse({'status': message})
+
+
+def deletar_comentario(request, comentario_id):
+    comentario = get_object_or_404(models.PostagemForumComentario, id=comentario_id)
+    #postagem_slug = comentario.postagem.slug
+    comentario.delete()
+    messages.success(request, 'Comentário deletado com sucesso!')
+    return redirect('detalhe-postagem-forum', slug=comentario.postagem_slug)
+
+
+def responder_comentario(request, comentario_id):
+    comentario = get_object_or_404(models.PostagemForumComentario, id=comentario_id)
+    if request.method == 'POST':
+        form = PostagemForumComentarioForm(request.POST)
+        message = 'Comentário Respondido com sucesso!'
+        if form.is_valid():
+            novo_comentario = form.save(commit=False)
+            novo_comentario.usuario = request.user
+            novo_comentario.parent_id = comentario_id
+            novo_comentario.postagem = comentario.postagem
+            novo_comentario.save()
+            messages.info(request, message)
+            return redirect('detalhe-postagem-forum',
+                            slug=comentario.postagem.slug)
+    return JsonResponse({'status': message})

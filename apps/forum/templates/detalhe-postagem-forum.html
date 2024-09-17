@@ -39,9 +39,37 @@
                     {% endfor %}
                 </div> 
             </div> 
+            {% include "comentarios/adicionar-comentario.html" %}
+            {% include "comentarios/lista-comentario.html" %}
+            
         </div>
     </div>
 </div>
 {% include "modal-form-postagem-forum.html" %}
 {% include "modal-deletar-postagem-forum.html" %}
 {% endblock %}
+{% block scripts %}
+    <script> 
+        document.addEventListener("DOMContentLoaded", function () {
+            const formRemocao = document.getElementById("form-remocao");
+            const formRespRemocao = document.getElementById("form-resp-remocao");
+    
+            formRemocao.addEventListener("submit", function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+                const confirmacao = confirm("Tem certeza de que deseja remover o comentário?");
+                if (confirmacao) {
+                    formRemocao.submit();
+                }
+            });
+
+            formRespRemocao.addEventListener("submit", function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+                const confirmacao = confirm("Tem certeza de que deseja remover o comentário?");
+                if (confirmacao) {
+                    formRespRemocao.submit();
+                }
+            });
+        });
+
+    </script>
+{% endblock scripts %}

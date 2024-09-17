@@ -39,6 +39,24 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
  	<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 	<script src="{% static 'js/scripts.js' %}"></script>
-	{% block scripts %}{% endblock scripts %}
+	{% block scripts %}
+    <script> 
+        document.addEventListener("DOMContentLoaded", function () {
+            const formRemocao = document.getElementById("form-remocao");
+    
+            formRemocao.addEventListener("submit", function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+    
+                const confirmacao = confirm("Tem certeza de que deseja remover o comentário?");
+    
+                if (confirmacao) {
+                    // Se o usuário confirmar, envie o formulário
+                    formRemocao.submit();
+                }
+            });
+        });
+
+    </script>
+{% endblock scripts %}
 </body>
 </html>
