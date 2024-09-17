@@ -14,10 +14,33 @@ def lista_postagem_forum(request):
     form_dict = {}
     filtros = {}
 
+    # titulo_busca = request.GET.get("titulo")
+    # if titulo_busca:
+    #     filtros["titulo"] = titulo_busca
+    #     filtros["descricao"] = titulo_busca
+
     titulo_busca = request.GET.get("titulo")
+    autor_busca = request.GET.get("autor")
+    categoria_busca = request.GET.get("categoria")
+    data_inicio = request.GET.get("data_inicio")
+    data_fim = request.GET.get("data_fim")
+    ativo = request.GET.get("ativo")
+
     if titulo_busca:
-        filtros["titulo"] = titulo_busca
-        filtros["descricao"] = titulo_busca
+        filtros["titulo__icontains"] = titulo_busca
+
+    if ativo :
+        filtros["ativo"] = ativo
+
+    if autor_busca:
+        filtros["autor__icontains"] = autor_busca
+
+    if categoria_busca:
+        filtros["categoria__icontains"] = categoria_busca
+
+    if data_inicio and data_fim:
+        filtros["data_publicacao__range"] = [data_inicio, data_fim]
+        
 
     if request.path == '/forum/':
         postagens = models.PostagemForum.objects.filter(ativo=True)

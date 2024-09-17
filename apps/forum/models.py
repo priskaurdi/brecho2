@@ -22,13 +22,6 @@ class PostagemForum(models.Model):
     
     slug = models.SlugField(unique=True, null=True)  # Campo de slug
 
-    def save(self, *args, **kwargs):
-        if not self.slug:  # Executa apenas se o campo 'slug' estiver vazio
-            slug_base = slugify(self.titulo)  # Gera o slug com base no título
-            random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))  # Gera uma string aleatória de 5 caracteres
-            self.slug = f"{slug_base}-{random_string}"  # Adiciona a string aleatória ao slug base
-	    super().save(*args, **kwargs)
-
     def __str__(self):
         return "{} ({})".format(self.titulo, self.data_publicacao)
     
@@ -36,6 +29,13 @@ class PostagemForum(models.Model):
         verbose_name = 'Postagem Forum'
         verbose_name_plural = 'Postagem Forum'
         ordering = ['-data_criacao']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:  # Executa apenas se o campo 'slug' estiver vazio
+            slug_base = slugify(self.titulo)  # Gera o slug com base no título
+            random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))  # Gera uma string aleatória de 5 caracteres
+            self.slug = f"{slug_base}-{random_string}"  # Adiciona a string aleatória ao slug base
+	    super().save(*args, **kwargs)
 
 
 class PostagemForumImagem(models.Model):
