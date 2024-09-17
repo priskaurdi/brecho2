@@ -46,14 +46,14 @@
         <div class="col-md-8">
             
             <!-- Coloca a lista de produtos aqui -->
-            {% for postagem, form in form_dict.items %} # agora é dicionario então coloca .items e form para cada objeto que aparecer no loop.
+            {% for postagem, form in form_dict.items %} 
             <div class="p-3 mb-3 rounded-3 shadow-sm">
                 <div class="align-items-center">
                     <div class="d-flex justify-content-between">
-                        <h5><a href="{% url 'detalhe-postagem-forum' postagem.id %}">{{postagem.titulo}}</a></h5>
+                        <h5><a href="{% url 'detalhe-postagem-forum' postagem.slug %}">{{postagem.titulo}}</a></h5>
                         <div class="div">
                             {% if postagem.usuario == request.user %}
-                            <a class="btn btn-warning" data-bs-toggle="modal" href="#editarPostagemModal{{postagem.id}}" role="button"> # Adiciona Botão
+                            <a class="btn btn-warning" data-bs-toggle="modal" href="#editarPostagemModal{{postagem.id}}" role="button"> 
                                 <i class="fas fa-edit"></i></a>  
                             <a class="btn btn-danger" data-bs-toggle="modal" href="#confirmarExclusaoModal{{postagem.id}}" role="button">
                                 <i class="fas fa-trash"></i></a>  
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div> 
-            {% include "modal-form-postagem-forum.html" %} # Adiciona formulario do modal
+            {% include "modal-form-postagem-forum.html" %} 
             {% include "modal-deletar-postagem-forum.html" %}
             {% endfor %}
             {% include 'components/paginacao.html' %}

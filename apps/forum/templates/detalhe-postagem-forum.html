@@ -10,7 +10,7 @@
                     <span>{{postagem.data_publicacao}}</span><br> 
                     <div class="div"> 
                         {% if postagem.usuario == request.user %}
-                        <a class="btn btn-warning" data-bs-toggle="modal" href="#editarPostagemModal{{postagem.id}}" role="button"> # Adiciona
+                        <a class="btn btn-warning" data-bs-toggle="modal" href="#editarPostagemModal{{postagem.id}}" role="button"> 
                             <i class="fas fa-edit"></i></a> 
                         <a class="btn btn-danger" data-bs-toggle="modal" href="#confirmarExclusaoModal{{postagem.id}}" role="button">
                             <i class="fas fa-trash"></i></a>  
@@ -21,7 +21,7 @@
                 <div class="mt-3">  
                     <h2>{{postagem.titulo}}</h2>
                     <p>{{postagem.descricao}}</p>
-                    {% for imagem in postagem.postagem_imagens.all %} # Adiciona um for 
+                    {% for imagem in postagem.postagem_imagens.all %} 
                     <a data-bs-toggle="modal" href="#imagemModal{{imagem.id}}" role="button"><i class="link-info fas fa-image fa-2x me-2"></i></a>
                     <div class="modal fade" id="imagemModal{{imagem.id}}" tabindex="-1" aria-labelledby="imagemModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

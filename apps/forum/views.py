@@ -55,6 +55,7 @@ def lista_postagem_forum(request):
 
     postagens = filtrar_modelo(postagens, **filtros)  
 
+
     for el in postagens:
         form = PostagemForumForm(instance=el) 
         form_dict[el] = form 
@@ -151,10 +152,9 @@ def deletar_postagem_forum(request, slug):
     if request.method == 'POST':
         postagem.delete()
         messages.error(request, message)
-    if re.search(r'/forum/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
-        return redirect('lista-postagem-forum')
-    return redirect(redirect_route)
-
+        if re.search(r'/forum/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
+            return redirect('lista-postagem-forum')
+        return redirect(redirect_route)
     return JsonResponse({'status':message})
 
 

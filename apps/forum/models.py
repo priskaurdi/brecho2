@@ -20,7 +20,7 @@ class PostagemForum(models.Model):
     ativo = models.BooleanField('Publicar Postagem?', default=False)
     # anexar_imagem = models.ImageField('Imagem Anexo', upload_to='postagem-forum/', blank=True, null=True)
     
-    slug = models.SlugField(unique=True, null=True)  # Campo de slug
+    slug = models.SlugField(unique=True, null=True, blank=True )  # Campo de slug
 
     def __str__(self):
         return "{} ({})".format(self.titulo, self.data_publicacao)
