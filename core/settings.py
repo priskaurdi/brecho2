@@ -122,7 +122,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-				'core.context_processors.context_social',
+				#Apps
+				'base.context_processors.context_social',
+				'base.context_processors.get_logo',
+				'base.context_processors.get_seo',
+				'base.context_processors.get_ga_code',
+				'base.context_processors.get_scripts',
             ],
         },
     },
