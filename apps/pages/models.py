@@ -37,6 +37,8 @@ class Conteudo(models.Model):
     titulo_2 = models.CharField(max_length=200, null=True, blank=True, help_text="Subtitulo")
     descricao_1 = models.CharField(max_length=200, null=True, blank=True, help_text="Descrição mais curta até 200 caracteres")
     descricao_2 = models.TextField(null=True, blank=True, help_text="Descrição mais longa")
+    descricao_3 = models.CharField(max_length=200, null=True, blank=True, help_text="Descrição mais curta até 200 caracteres")
+    descricao_4 = models.CharField(max_length=200, null=True, blank=True, help_text="Descrição mais curta até 200 caracteres")
     titulo_botao_1 = models.CharField(max_length=50, null=True, blank=True,help_text="Titulo do Botão 1")
     rota_botao_1 = models.CharField(max_length=50, null=True, blank=True,help_text="Nome da Rota que configurou no urls.py")
     titulo_botao_2 = models.CharField(max_length=50, null=True, blank=True,help_text="Titulo do Botão 2")
@@ -63,8 +65,8 @@ class Blocos(models.Model):
     ativo = models.BooleanField(default=True)
     
     class Meta:
-        verbose_name = '3 - Bloco'
-        verbose_name_plural = '3 - Bloco'
+        verbose_name = '3 - Blocos'
+        verbose_name_plural = '3 - Blocos'
         ordering = ['id']
 
     def __str__(self):
