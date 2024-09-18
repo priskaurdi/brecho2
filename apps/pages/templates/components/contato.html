@@ -20,8 +20,11 @@
 
         <div class="">
             <div class="d-flex">
-                <img src="https://img.freepik.com/fotos-premium/vista-lateral-do-medico-feminino-sorridente_23-2148453487.jpg?w=2000"
-                    width="450" alt="">
+                {% for contato in bloco.conteudo.all %}
+                {% if forloop.first %}
+                <img src="{{contato.imagem.url}}" width="450" alt="">
+                {% endif %}
+                {% endfor %}
                 <form class="row p-5 m-5" action="#" class="bg-light p-5">
                     <h4>Formulário de Contato</h4>
                     <div class="form-group">
