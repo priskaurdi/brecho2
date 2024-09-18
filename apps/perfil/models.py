@@ -12,8 +12,16 @@ class Perfil(models.Model):
     descricao = models.TextField(blank=True)  
     genero = models.CharField(max_length=20, blank=True)
     telefone = models.CharField(max_length=20, blank=True)
+    rg = models.CharField(max_length=20, blank=True)
+    cpf = models.CharField(max_length=20, blank=True)
+    dtNascimento = models.CharField(max_length=20, blank=True)
+    endereco = models.CharField(max_length=100, blank=True)
+    numCasa = models.CharField(max_length=20, blank=True)
+    compEnd = models.CharField(max_length=20, blank=True)
+    bairro = models.CharField(max_length=20, blank=True)
     cidade = models.CharField(max_length=20, blank=True)
-    estado = models.CharField(max_length=20, blank=True) 
+    estado = models.CharField(max_length=20, blank=True)
+    cep = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return f' Perfil: {self.usuario.email}'
