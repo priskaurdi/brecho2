@@ -1,6 +1,7 @@
 import re
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from catalogo.forms import CatalogoComentarioForm, CatalogoForm
 from django.contrib import messages 
 from catalogo import models
 from base.utils import add_form_errors_to_messages, filtrar_modelo
@@ -21,6 +22,7 @@ def lista_catalogo(request):
     produto_busca = request.GET.get("produto")
     descProduto_busca = request.GET.get("descProduto")
     categoria_busca = request.GET.get("categoria")
+    valor_busca = request.GET.get("valor")
     data_inicio = request.GET.get("data_inicio")
     data_fim = request.GET.get("data_fim")
     ativo = request.GET.get("ativo")
@@ -36,6 +38,9 @@ def lista_catalogo(request):
 
     if categoria_busca:
         filtros["categoria__icontains"] = categoria_busca
+
+    if valor_busca:
+        filtros["valor__icontains"] = valor_busca
 
     if data_inicio and data_fim:
         filtros["data_publicacao__range"] = [data_inicio, data_fim]
@@ -56,11 +61,11 @@ def lista_catalogo(request):
 
 
     for el in catalogos:
-        form = PostagemForumForm(instance=el) 
+        form = CatalogoForm(instance=el) 
         form_dict[el] = form 
         
-    # Criar uma lista de tuplas (postagem, form) a partir do form_dict
-    form_list = [(postagem, form) for postagem, form in form_dict.items()]
+    # Criar uma lista de tuplas (catalogo, form) a partir do form_dict
+    form_list = [(catalogo, form) for catalogo, form in form_dict.items()]
     
     # Aplicar a paginação à lista de tuplas
     paginacao = Paginator(form_list, 3) # '3' é numero de registro por pagina
@@ -70,7 +75,7 @@ def lista_catalogo(request):
     page_obj = paginacao.get_page(pagina_numero)
     
     # Criar um novo dicionário form_dict com base na página atual
-    form_dict = {postagem: form for postagem, form in page_obj}
+    form_dict = {catalogo: form for catalogo, form in page_obj}
     
     context = {'page_obj': page_obj, 'form_dict': form_dict}
     return render(request, template_view, context)
