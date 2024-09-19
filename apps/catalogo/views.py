@@ -100,7 +100,7 @@ def criar_catalogo(request):
                     models.CatalogoImagem.objects.create(catalogo=produto, imagem=f)
                 # Redirecionar para uma página de sucesso ou fazer qualquer outra ação desejada
                 messages.success(request, 'Seu Post foi cadastrado com sucesso!')
-                return redirect('lista-catalogo')
+                return redirect('lista_catalogo')
         else:
             add_form_errors_to_messages(request, form)
     return render(request, 'form-catalogo.html', {'form': form})
@@ -127,7 +127,7 @@ def editar_catalogo(request,slug):
     if request.user != catalogo.usuario and not (
         any(grupo.name in lista_grupos for grupo in request.user.groups.all()) or request.user.is_superuser):
         messages.warning(request, 'Seu usuário não tem permissões para acessar essa pagina.')
-        return redirect('lista-catalogo')  # Redireciona para uma página de erro ou outra página adequada
+        return redirect('lista_catalogo')  # Redireciona para uma página de erro ou outra página adequada
     
     if request.method == 'POST':
         form = CatalogoForm(request.POST, instance=catalogo)

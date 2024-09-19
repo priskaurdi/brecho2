@@ -9,11 +9,11 @@
                 <i class="fas fa-user mx-2"></i> + Criar Catálogo</button>
             
             <form class="hstack gap-1" method="GET" action="?">
-                <input type="text" name="titulo" class="form-control" placeholder="Buscar por título" 
-                    value="{{ request.GET.titulo }}">
+                <input type="text" name="produto" class="form-control" placeholder="Buscar por produto" 
+                    value="{{ request.GET.produto }}">
                 <!-- Outros campos de filtro aqui, se necessário -->
                 <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
-                {% if request.GET.titulo %}
+                {% if request.GET.produto %}
                 <a href="{% url 'dash-lista-catalogo' %}" class="link-secondary">Resetar</a>
                 {% endif %}
             </form>

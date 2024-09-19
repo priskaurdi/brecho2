@@ -2,8 +2,8 @@ from django.urls import path
 from quadros import views
 
 urlpatterns = [
-    path('', views.lista_quadros, name='lista-quadros'),
-    path('dashboard/lista-quadros/', views.lista_quadros, name='dash-lista-quadros'), 
+    path('', views.lista-quadros, name='lista-quadros'),
+    path('dashboard/lista-quadros/', views.lista-quadros, name='dash-lista-quadros'), 
     path('criar-quadros/', views.criar_quadros, name='criar-quadros'),
     path('detalhe-quadros/<str:slug>/', views.detalhe_quadros, name='detalhe-quadros'),
     path('editar-quadros/<str:slug>/', views.editar_quadros, name='editar-quadros'),

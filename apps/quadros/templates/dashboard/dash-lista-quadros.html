@@ -9,12 +9,12 @@
                 <i class="fas fa-user mx-2"></i> + Criar Quadros</button>
             
             <form class="hstack gap-1" method="GET" action="?">
-                <input type="text" name="titulo" class="form-control" placeholder="Buscar por título" 
-                    value="{{ request.GET.titulo }}">
+                <input type="text" name="quadro" class="form-control" placeholder="Buscar por quadro" 
+                    value="{{ request.GET.quadro }}">
                 <!-- Outros campos de filtro aqui, se necessário -->
                 <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
-                {% if request.GET.titulo %}
-                <a href="{% url 'dash-lista-catalogo' %}" class="link-secondary">Resetar</a>
+                {% if request.GET.quadro %}
+                <a href="{% url 'dash-lista-quadros' %}" class="link-secondary">Resetar</a>
                 {% endif %}
             </form>
       
