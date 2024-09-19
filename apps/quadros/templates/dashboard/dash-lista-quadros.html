@@ -1,0 +1,72 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard - Quadros{% endblock %}
+{% block content_dash %}
+<div class="p-3">
+    <div class="d-flex justify-content-between mb-3">
+        <div class="hstack gap-3">
+      
+            <button class="btn btn-secondary" onclick="location.href='{% url 'criar-quadros' %}'">
+                <i class="fas fa-user mx-2"></i> + Criar Quadros</button>
+            
+            <form class="hstack gap-1" method="GET" action="?">
+                <input type="text" name="titulo" class="form-control" placeholder="Buscar por título" 
+                    value="{{ request.GET.titulo }}">
+                <!-- Outros campos de filtro aqui, se necessário -->
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                {% if request.GET.titulo %}
+                <a href="{% url 'dash-lista-catalogo' %}" class="link-secondary">Resetar</a>
+                {% endif %}
+            </form>
+      
+        </div> 
+        <h2>Todos os Quadros </h2>
+    </div>
+    <!-- table -->
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome/Sobrenome</th>
+                    <th scope="col">Quadro</th>
+                    <th scope="col">Data Criação</th>
+                    <th scope="col">Data Publicação</th>
+                    <th scope="col">Ativo</th>
+                    <th scope="col">Acão</th>
+                </tr>
+            </thead>
+            {% for quadros, form in form_dict.items %} 
+            <tbody>
+                <tr>
+                    <td scope="row">{{ quadros.id }}</td>
+                    <td scope="row">{{ quadros.usuario.first_name }} {{ quadros.usuario.last_name }}</td>
+                    <td scope="row">{{ quadros.quadro }}</td>
+                    <td scope="row">{{ quadros.data_criacao|date:'d/m/Y'}}</td>
+                    <td scope="row">{{ quadros.data_publicacao|date:'d/m/Y'}}</td>
+                    <td scope="row">
+                        {% if quadros.ativo %}
+                        <span class="badge bg-success rounded-pill d-inline">Ativado</span> 
+                        {% else %}
+                        <span class="badge bg-danger rounded-pill d-inline">Desativado</span>  
+                        {% endif %}
+                    </td>
+                    <td scope="row">
+                        <a class="link-warning" href="{% url 'detalhe-quadros' quadros.id %}">
+                            <i class="fas fa-eye mx-2"></i></a>
+                        <a class="ml-2 link-secondary" data-bs-toggle="modal" href="#editarPostagemModal{{quadros.id}}" role="button"> 
+                            <i class="far fa-file mx-2"></i></a>
+                        <a class="ml-3 link-danger" data-bs-toggle="modal" href="#confirmarExclusaoModal{{quadros.id}}" role="button">
+                            <i class="fas fa-trash mx-2"></i></a>
+                        {% include "modal-form-postagem-forum.html" %} 
+                        {% include "modal-deletar-postagem-forum.html" %}
+                    </td>
+                </tr>
+            </tbody> 
+            {% empty %}
+            <p>Nenhum produto cadastrado.</p>
+            {% endfor %}
+        </table>
+    </div>
+    {% include 'components/paginacao.html' %}
+</div>
+{% endblock %}
