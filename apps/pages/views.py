@@ -13,6 +13,8 @@ def paginas_view(request):
         'sobre': Blocos.objects.filter(pagina__nome='sobre',ativo=True).order_by('ordem'),
         'faq': Blocos.objects.filter(pagina__nome='faq',ativo=True).order_by('ordem'),
         'contato': Blocos.objects.filter(pagina__nome='contato',ativo=True).order_by('ordem'),
+        'catalogo': Blocos.objects.filter(pagina__nome='catalogo',ativo=True).order_by('ordem'),
+        'quadros': Blocos.objects.filter(pagina__nome='quadros',ativo=True).order_by('ordem'),
         }
     context = {'blocos': pagina[str(url_name)]}
     return render(request, 'index.html', context)
