@@ -2,26 +2,25 @@
 <section>
     <div class="container py-lg-5">
         <div class="row justify-content-center pb-5">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <h2 class="mb-3">{{bloco.titulo}}</h2>
                 <p>{{bloco.descricao|default:""}}</p>
             </div>
         </div>
         <div class="row g-4">
-            {% for servico in bloco.conteudo.all %} 
+            {% for card in bloco.conteudo.all %} 
             <div class="col-md-6 d-flex align-self-stretch">
                 <div class="d-flex gap-4">
-                    <div class="rounded text-white p-5" style="background-color: {{servico.cor_label}}">
-                        <i class="{{servico.icone}}"></i>
+                    <div class="rounded text-white p-5" style="background-color: {{card.cor_label}}">
+                        <i class="{{card.icone}}"></i>
                     </div>
                     <div class="media-body pl-md-4">
-                        <h3 class="text-dark text-decoration-none mb-3">{{servico.titulo_1}}</h3>
-                        <p>{{servico.descricao_1}}</p>
+                        <h3 class="text-dark text-decoration-none mb-3">{{card.titulo_1}}</h3>
+                        <p>{{card.descricao_1}}</p>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-                
+            {% endfor %} 
         </div>
     </div>
 </section>
@@ -47,5 +46,3 @@
     </div>
 </section>
 {% endif %}
-
-

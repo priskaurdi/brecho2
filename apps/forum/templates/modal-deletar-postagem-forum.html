@@ -7,7 +7,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				 <p>Você tem certeza de que deseja excluir a postagem "{{ postagem.titulo }}"?</p> 
+				<p>Você tem certeza de que deseja excluir a postagem "{{ postagem.titulo }}"?</p> 
 			</div>
 			<div class="modal-footer">
 			<form method="post" action="{% url 'deletar-postagem-forum' postagem.slug %}">
@@ -16,7 +16,7 @@
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 				<button type="submit" class="btn btn-danger">Excluir</button>
 			</form>
-	    </div>
+			</div>
 		</div>
 	</div>
 </div>

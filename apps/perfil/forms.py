@@ -8,8 +8,8 @@ class PerfilForm(forms.ModelForm):
     )
     class Meta:
         model = Perfil
-        fields = ['foto', 'ocupacao', 'genero', 'telefone',
-                  'cidade','estado', 'descricao']
+        fields = ['foto', 'ocupacao', 'genero', 'telefone', 'cidade','estado', 'descricao',
+                'rg', 'cpf', 'dtNascimento', 'endereco', 'numCasa', 'compEnd', 'bairro', 'cep']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

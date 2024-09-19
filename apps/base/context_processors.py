@@ -25,5 +25,5 @@ def get_ga_code(request):
 def get_scripts(request):
     return {
         'header_scripts': Scripts.objects.filter(place='HD', is_active=True),
-        'footer_scripts': Scripts.objects.filter(place='HD', is_active=True),
+        'footer_scripts': Scripts.objects.filter(place='FT', is_active=True),
     }

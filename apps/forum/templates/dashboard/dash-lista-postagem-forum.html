@@ -4,7 +4,6 @@
 <div class="p-3">
     <div class="d-flex justify-content-between mb-3">
         <div class="hstack gap-3">
-      
             <button class="btn btn-secondary" onclick="location.href='{% url 'criar-postagem-forum' %}'">
                 <i class="fas fa-user mx-2"></i> + Criar Postagem</button>
             
@@ -17,9 +16,7 @@
                 <a href="{% url 'dash-lista-postagem-forum' %}" class="link-secondary">Resetar</a>
                 {% endif %}
             </form>
-      
-        </div> 
-        <h2>Todas as Postagens </h2>
+        </div>
     </div>
     <!-- table -->
     <div class="table-responsive">
@@ -63,7 +60,7 @@
                 </tr>
             </tbody> 
             {% empty %}
-            <p>Nenhuma poste cadastrado.</p>
+            <p>Nenhum poste cadastrado.</p>
             {% endfor %}
         </table>
     </div>

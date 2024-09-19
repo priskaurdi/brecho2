@@ -3,8 +3,7 @@
 {% block content_dash %}
 <div class="row"> 
     <div class="col-md-8">
-        <form class="p-3 rounded-3 shadow-sm" method="post" 
-							enctype="multipart/form-data">
+        <form class="p-3 rounded-3 shadow-sm" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <h4>{% if request.path == '/forum/form-postagem-forum/' %} 
                 Criar Postagem {% else %} 

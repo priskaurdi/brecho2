@@ -43,8 +43,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
-    
-    force_change_password = models.BooleanField(default=False)
 
     def requires_password_change(self):
         return self.force_change_password

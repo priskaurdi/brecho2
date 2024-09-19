@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         myuser = MyUser.objects.all()
         for user in myuser:
-             
+            
             get_email = user.email.split("@")[0]
             username = re.sub(r"[^a-zA-Z0-9]","",get_email)
             user.username = username

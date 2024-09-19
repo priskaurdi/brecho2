@@ -1,12 +1,12 @@
+import random # escolha aleatoria
+import string # contem todas as letras do alfabeto, etc.
+import re
 from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from contas.models import MyUser 
-import random # escolha aleatoria
-import string # contem todas as letras do alfabeto, etc.
-from django.core.mail import send_mail
-from core import settings
-import re
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -41,14 +41,11 @@ class CustomUserCreationForm(forms.ModelForm):
             raise forms.ValidationError("A senha deve conter pelo menos 8 caracteres.")
 			
         # Verifique se a senha contém pelo menos uma letra maiúscula, uma letra minúscula e um caractere especial
-        maiusculas=re.search(r'[A-Z]', password1)
-        minusculas=re.search(r'[a-z]', password1)
-        caract_esp=re.search(r'[!@#$%^&*(),.?":{}|<>]', password1)
-        if not maiusculas or not minusculas or not caract_esp:
-            raise forms.ValidationError("A senha deve conter \
-                                                    pelo menos 8 caracteres, uma letra maiúscula, uma letra \
-                                                    minúscula e um caractere especial.")
-        return password1        
+        if not re.search(r'[A-Z]', password1) or not re.search(r'[a-z]', password1) or not re.search(r'[!@#$%^&*(),.?":{}|<>]', password1):
+            raise forms.ValidationError("A senha deve conter pelo menos 8 caracteres, \
+                                        uma letra maiúscula, uma letra minúscula e um caractere \
+                                        especial.")
+        return password1       
     
     def clean_password2(self):
         # Check that the two password entries match

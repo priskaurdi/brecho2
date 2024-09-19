@@ -8,11 +8,10 @@
     <meta name="description" content="{{ seo.meta_description }}" />
     <meta name="keywords" content="{{ seo.meta_keywords }}"/>
     <meta name="author" content="Nome do autor">
-    <meta name="robots" content="noindex, nofollow">
+    <!-- <meta name="robots" content="noindex, nofollow">
     <meta property="og:title" content="Título compartilhado nas redes sociais">
     <meta property="og:description" content="Descrição compartilhada nas redes sociais">
-    <meta property="og:image" content="URL da imagem compartilhada nas redes sociais">
-    
+    <meta property="og:image" content="URL da imagem compartilhada nas redes sociais"> -->
 {% endblock %}
 
 <title>{% block title %}{% endblock %}</title>
@@ -22,11 +21,10 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 {% for header_script in header_scripts %}
-	 {{ header_script.script|safe }}
+	{{ header_script.script|safe }}
 {% endfor %}    
     
     
-   
     <!-- usado para especificar o nome do autor do site. -->
     <!-- usado para instruir os mecanismos de pesquisa a não indexar ou seguir as páginas do site. -->
     <!-- usado para fornecer um título personalizado para ser usado quando o conteúdo do site é compartilhado em redes sociais. -->

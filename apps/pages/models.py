@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Pagina(models.Model): 
     nome = models.CharField(max_length=100, 
-                              help_text='Digite o nome da pagina. Ex: Inicio, Contato...')
+                            help_text='Digite o nome da pagina. Ex: Inicio, Contato...')
 
     class Meta:
         verbose_name = '0 - Paginas'
@@ -17,7 +17,7 @@ class Pagina(models.Model):
 ## Tipos de Blocos, SLIDE, BANNER_1, BANNER_2, BANNER_3 etc...
 class TipoBloco(models.Model): 
     nome = models.CharField(max_length=100, 
-                              help_text='Digite o nome do bloco. Ex: SLIDE, BANNER_1...')
+                            help_text='Digite o nome do bloco. Ex: SLIDE, BANNER_1...')
     class Meta:
         verbose_name = '1 - Tipo de Bloco'
         verbose_name_plural = '1 - Tipo de Bloco'
@@ -50,8 +50,7 @@ class Conteudo(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return '{} - {}'.format(self.nome,
-                                     self.titulo_1)
+        return '{} - {}'.format(self.nome, self.titulo_1)
     
 
 ## Modelo para criar varios blocos

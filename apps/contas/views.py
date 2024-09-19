@@ -1,19 +1,18 @@
+from django.conf import settings
+from django.contrib.auth.models import Group, User  
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator 
+from django.core.mail import send_mail
 from base.utils import add_form_errors_to_messages
-from core import settings
 from perfil.forms import PerfilForm
 from perfil.models import Perfil
-from contas.forms import CustomUserCreationForm, UserChangeForm
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from contas.models import MyUser
 from contas.permissions import grupo_colaborador_required
+from contas.models import MyUser
 from django.contrib.auth.forms import PasswordChangeForm
-from django.core.mail import send_mail
-from django.core.paginator import Paginator
+from contas.forms import CustomUserCreationForm, UserChangeForm
 
 
 # Create your views here.
@@ -26,6 +25,26 @@ def timeout_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+# Mudança de Senha Force (first_login)
+@login_required
+def force_password_change_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.force_change_password = False # passa o parametro para False.
+            user.save()
+            update_session_auth_hash(request, user)
+            return redirect('password_change_done')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {'form': form}
+    return render(request, 'registration/password_force_change_form.html', context)
+
 
 #Login
 def login_view(request):
@@ -50,10 +69,11 @@ def login_view(request):
             
         else:
             messages.error(request, 'Combinação de e-mail e senha inválida. \
-                           Se o erro persistir, entre em contato como o administrador do sistema.')
+                        Se o erro persistir, entre em contato como o administrador do sistema.')
     if request.user.is_authenticated:
         return redirect('home')
     return render(request, 'login.html')
+
 
 #Registrar
 def register_view(request):
@@ -84,21 +104,23 @@ def register_view(request):
             )
             messages.success(request, 'Registrado. Um e-mail foi enviado \
                 para administrador aprovar. Aguarde contato') 
-               
+            
             return redirect('login')
         
         else:
             # Tratar quando usuario já existe, senhas... etc...
             add_form_errors_to_messages(request, form)
+
     form = CustomUserCreationForm(user=request.user)
     return render(request, "register.html",{"form": form})
 
 
+# Atualizar Meu usuario
 @login_required()
 def atualizar_meu_usuario(request):
 
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=user, user=request.user)
+        form = UserChangeForm(request.POST, instance=request.user, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Seu perfil foi atualizado com sucesso!')
@@ -110,6 +132,7 @@ def atualizar_meu_usuario(request):
     return render(request, 'user_update.html', {'form': form})
 
 
+# Atualizar Qualquer usuário pelo parametro username
 @login_required()
 @grupo_colaborador_required(['administrador','colaborador'])
 def atualizar_usuario(request, username):
@@ -118,7 +141,7 @@ def atualizar_usuario(request, username):
         form = UserChangeForm(request.POST, instance=user, user=request.user)
         if form.is_valid():
             usuario = form.save()
-             
+            
             if user.is_active: ## se usuario for ativado a gente muda o status para True e envia e-mail
                 usuario.is_active = True # muda status para True (Aprovado)
                 print(usuario.is_active)
@@ -142,7 +165,7 @@ def atualizar_usuario(request, username):
     return render(request, 'user_update.html', {'form': form})
 
 
-
+# Lista Todos Usuários do sistema
 @login_required
 @grupo_colaborador_required(['administrador','colaborador'])
 def lista_usuarios(request):
@@ -180,7 +203,7 @@ def adicionar_usuario(request):
             return redirect('lista_usuarios')
         else:
             #Verifica erros individualmente para cada campo do formulario
-           # Adicionar mensagens de erro aos campos dos formulários
+            # Adicionar mensagens de erro aos campos dos formulários
             add_form_errors_to_messages(request, user_form)
             add_form_errors_to_messages(request, perfil_form)
 
@@ -189,22 +212,6 @@ def adicionar_usuario(request):
     return render(request, "adicionar-usuario.html", context)
 
 
-# Mudança de Senha Force (first_login)
-@login_required
-def force_password_change_view(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.force_change_password = False # passa o parametro para False.
-            user.save()
-            update_session_auth_hash(request, user)
-            return redirect('password_change_done')
-    else:
-        form = PasswordChangeForm(request.user)
-    context = {'form': form}
-    return render(request, 'registration/password_force_change_form.html', context)
+
 
 

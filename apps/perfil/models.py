@@ -6,7 +6,7 @@ from django.dispatch import receiver
 # Create your models here. 
 class Perfil(models.Model):   
     usuario = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, related_name='perfil') 
+                                on_delete=models.CASCADE, related_name='perfil') 
     foto = models.ImageField(upload_to='perfil/foto/', blank=True)  
     ocupacao = models.CharField(max_length=120, blank=True)
     descricao = models.TextField(blank=True)  

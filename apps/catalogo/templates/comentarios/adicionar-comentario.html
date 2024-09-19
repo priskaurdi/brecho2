@@ -1,6 +1,6 @@
 <div class="mt-5">  
     {% if user.is_authenticated %} 
-    <form method="POST" action="{% url 'adicionar-comentario' postagem.slug %}">
+    <form method="POST" action="{% url 'adicionar-comentario' catalogo.slug %}">
         {% csrf_token %}
         {{ form_comentario.as_p }}
         <button type="submit" class="btn btn-outline-primary">Enviar</button>
