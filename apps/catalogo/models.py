@@ -9,11 +9,11 @@ import string
 from contas.models import MyUser
 
 
-#user = get_user_model()
+user = get_user_model()
 
 # Create your models here. 
 class Catalogo(models.Model):   
-    usuario = models.ForeignKey(MyUser, 
+    usuario = models.ForeignKey(user, 
 								related_name="usuario_catalogo", on_delete=models.CASCADE) 
     #foto = models.ImageField(upload_to='catalogo/foto/', blank=True)  
     produto = models.CharField('Produto',max_length=100)
@@ -58,7 +58,7 @@ class CatalogoImagem(models.Model):
 
 
 class CatalogoComentario(models.Model):
-    usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE, 
+    usuario = models.ForeignKey(user, on_delete=models.CASCADE, 
 								related_name='usuario_comentario_catalogo')
     catalogo = models.ForeignKey(Catalogo, 
 								on_delete=models.CASCADE, related_name="catalogo_comentario") 

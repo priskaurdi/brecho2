@@ -1,16 +1,27 @@
+{% load static %}
+<!-- <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target" id="ftco-navbar"> -->
 <nav class="navbar navbar-expand-lg bg-light" style="height: 70px;">
     <div class="container-fluid bg-light">
-        <img src="{{ logo.image.url }}" width="150" alt="{{ logo.title }}" title="{{ logo.title }}" class="logo">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <span class="text-secondary fw-bold">BrechóSim</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Início</a>
+                </li>-->
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a>  
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quadros' %}">Quadros</a> 
+                </li>
+                <li class="nav-item"> 
                     <a class="nav-link" href="{% url 'lista-postagem-forum' %}">Fórum</a>
                 </li>
                 <li class="nav-item">
@@ -44,6 +55,23 @@
             <button class="btn btn-primary mx-2" onclick="location.href='{% url 'login' %}'">Entrar</button>
             <button class="btn btn-warning" onclick="location.href='{% url 'register' %}'">Cadastrar-se</button>
             {% endif %}
-        </div>
+        <!-- </div>
+        <div class="d-flex">
+            <p class="mx-2">
+                <a href="https://www.instagram.com/brech0sim/" target="_blank" rel="external">
+                    <img src="{% static 'img_logo\instalogo30.png' %}" alt="Instagram">
+                </a>
+            </p>
+            <p class="mx-2">
+                <a href="https://www.enjoei.com.br/@brech0sim?sid=8ca37619-316a-4122-b067-b4ce87999e65-1711750969077" target="_blank" rel="external">
+                    <img src="{% static 'img_logo\logoenjoei30.png' %}" alt="Enjoei">
+                </a>
+            </p>
+            <p class="mx-2">
+                <a class="whatsapp-link" href="https://wa.me/5511968669243" target="_blank">
+                    <i class="fa fa-whatsapp"></i>
+                </a>
+            </p>
+        </div> -->
     </div>
 </nav>

@@ -143,9 +143,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Banco de Dados.
 DATABASES = {
-  'default': {
-      'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': os.path.join(BASE_DIR, os.getenv('NAME_DB')),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, os.getenv('NAME_DB')),
 			#'USER':os.getenv('USER_DB')
 			#'PASSWORD': os.getenv('PASSWORD_DB')
 			#'HOST':os.getenv('HOST_DB')

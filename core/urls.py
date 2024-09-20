@@ -25,6 +25,8 @@ urlpatterns = [
     path('perfil/', include('perfil.urls')), 
     path('config/', include('config.urls')),
     path('forum/', include('forum.urls')),
+    #path('catalogo/', include('catalogo.urls')),
+    #path('quadros/', include('quadros.urls')),
     path('', include('pages.urls')),
     
 ]
