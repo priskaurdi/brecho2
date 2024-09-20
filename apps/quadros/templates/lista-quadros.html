@@ -3,27 +3,28 @@
 {% block content %}
 <div class="container mt-3">
 	<div class="row">
-	    <div class="col-md-8">
-	        <!-- {% include 'components/message.html' %} -->
-	        {% for quadros, form in form_dict.items %}
-	        <div class="p-3 mb-3 rounded-3 shadow-sm">
-	            <div class="align-items-center">
-	                <div class="d-flex justify-content-between">
-	                    <h5><a href="{% url 'detalhe-quadros' quadros.slug %}">{{quadros.quadro}}</a></h5>
-	                    <small>{{quadros.usuario.first_name}} {{quadros.usuario.last_name}}</small> 
-	                </div>  
-	                <div class="text-truncate-box"> 
-	                    <p class="text-truncate">{{quadros.descQuadro|safe|truncatechars:230}}</p> 
-	                </div>
-	            </div>
-	            <div class="d-flex justify-content-between align-items-center">
-	                <div class="align-items-center">
-	                    <small class="text-muted">{{quadros.data_publicacao}}</small>
-	                </div>
-	            </div>
-	        </div> 
-	        {% endfor %}
-	    </div> 
+		<div class="col-md-8">
+			<!-- {% include 'components/message.html' %} -->
+			{% for quadros, form in form_dict.items %}
+			<div class="p-3 mb-3 rounded-3 shadow-sm">
+				<div class="align-items-center">
+					<div class="d-flex justify-content-between">
+						<h5><a href="{% url 'detalhe-quadros' quadros.slug %}">{{quadros.quadro}}</a></h5>
+						<small>{{quadros.usuario.first_name}} {{quadros.usuario.last_name}}</small>
+					</div>
+					<div class="text-truncate-box">
+						<p class="text-truncate">{{quadros.descQuadro|safe|truncatechars:230}}</p>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="align-items-center">
+						<small class="text-muted">{{quadros.data_publicacao}}</small>
+					</div>
+					<a href="https://wa.me/5511968669243?text=Tenho interesse no quadro {{ quadros.quadro }}" class="btn btn-success">Contatar pelo WhatsApp</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div> 
 		{% include 'components/paginacao.html' %}
 	</div>
 </div>

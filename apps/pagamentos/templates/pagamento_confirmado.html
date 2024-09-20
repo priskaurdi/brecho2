@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Pagamento Confirmado{% endblock %}
+
+{% block content %}
+    <h2>Pagamento Confirmado</h2>
+    <p>Seu pagamento de <strong>R$ {{ pagamento.valor_total }}</strong> foi recebido com sucesso!</p>
+
+    {% if pagamento.produto %}
+        <p>Produto: <strong>{{ pagamento.produto.produto }}</strong></p>
+    {% elif pagamento.quadro %}
+        <p>Quadro: <strong>{{ pagamento.quadro.quadro }}</strong></p>
+    {% endif %}
+    
+    <p>Status do pagamento: <strong>{{ pagamento.status }}</strong></p>
+    <a href="{% url 'pagamentos_historico' %}">Ver Histórico de Pagamentos</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Pagamento{% endblock %}
+
+{% block content %}
+    <h2>Detalhes do Pagamento</h2>
+    
+    <p><strong>Valor:</strong> {{ pagamento.valor }}</p>
+    <p><strong>Status:</strong> {{ pagamento.status }}</p>
+    <p><strong>Data do Pagamento:</strong> {{ pagamento.data_pagamento }}</p>
+    <p><strong>Chave PIX:</strong> {{ pagamento.chave_pix }}</p>
+
+    <a href="{% url 'pagamentos_historico' %}">Voltar ao Histórico de Pagamentos</a>
+{% endblock %}

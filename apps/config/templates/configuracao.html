@@ -13,7 +13,7 @@
             {% if perms.contas.view_myuser %}
             <li><a href="{% url 'lista_usuarios' %}">Lista Todos usuários</a></li>
             {% endif %} 
-      </ul>
+        </ul>
     </div>
 
     <div class="p-5 bg-light" style="width: 430px;">
@@ -26,6 +26,31 @@
             <li><a href="#">Alterar Logo</a></li>
         </ul>
     </div>
+
+    <div class="p-5 bg-light" style="width: 430px;">
+        <h4>Catálogo</h4>
+        <p>Configurações de peças, preços.</p>
+        <ul>
+            <li><a href="#">Incluir produto</a></li>
+            <li><a href="#">Alterar banner inicial</a></li>
+            <li><a href="#">ALterar imagens</a></li>
+            <li><a href="#">Alterar preço</a></li>
+        </ul>
+    </div>
+
+
+    <div class="p-5 bg-light" style="width: 430px;">
+        <h4>Quadros</h4>
+        <p>Configurações dos quadros, preços.</p>
+        <ul>
+            <li><a href="#">Incluir quadro</a></li>
+            <li><a href="#">Alterar banner inicial</a></li>
+            <li><a href="#">ALterar imagens</a></li>
+            <li><a href="#">Alterar preço</a></li>
+        </ul>
+    </div>
+
+
 </div>
 
 {% endblock %}

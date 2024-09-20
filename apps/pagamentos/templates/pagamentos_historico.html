@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Histórico de Pagamentos{% endblock %}
+
+{% block content %}
+    <h2>Histórico de Pagamentos</h2>
+    
+    {% if pagamentos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Data do Pagamento</th>
+                    <th>Detalhes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>
+                            {% if pagamento.produto %}
+                                Produto: {{ pagamento.produto.produto }}
+                            {% elif pagamento.quadro %}
+                                Quadro: {{ pagamento.quadro.quadro }}
+                            {% endif %}
+                        </td>
+                        <td>{{ pagamento.valor_total }}</td>
+                        <td>{{ pagamento.status }}</td>
+                        <td>{{ pagamento.data_pagamento }}</td>
+                        <td><a href="{% url 'pagamento_detalhes' pagamento.id %}">Ver Detalhes</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Você ainda não realizou nenhum pagamento.</p>
+    {% endif %}
+{% endblock %}

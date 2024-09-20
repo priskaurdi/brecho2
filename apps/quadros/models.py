@@ -9,11 +9,11 @@ import string
 from contas.models import MyUser
 
 
-#user = get_user_model()
+user = get_user_model()
 
 # Create your models here. 
 class Quadros(models.Model):   
-    usuario = models.ForeignKey(MyUser, 
+    usuario = models.ForeignKey(user, 
 								related_name="usuario_quadros", on_delete=models.CASCADE) 
     #foto = models.ImageField(upload_to='catalogo/foto/', blank=True)  
     quadro = models.CharField('Quadro',max_length=100)
@@ -84,3 +84,4 @@ class QuadrosComentario(models.Model):
         verbose_name = 'Comentário'
         verbose_name_plural = 'Comentários'
         ordering = ['-data_criacao']
+

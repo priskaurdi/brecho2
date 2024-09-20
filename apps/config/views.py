@@ -16,8 +16,8 @@ def relatorio_view(request):
 
 @login_required
 def catalogo_view(request):
-    return render(request, 'catalogo.html')
+    return render(request, 'dash-lista-catalogo.html')
 
 @login_required
 def quadros_view(request):
-    return render(request, 'quadros.html')
+    return render(request, 'dash-lista-quadros.html')

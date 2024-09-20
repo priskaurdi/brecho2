@@ -91,6 +91,7 @@ PROJECT_APPS = [
 	'apps.forum',
 	'apps.catalogo',
 	'apps.quadros',
+	'apps.pagamentos',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
 
