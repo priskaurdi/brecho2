@@ -6,7 +6,7 @@ from django.contrib import messages
 from forum import models
 from base.utils import add_form_errors_to_messages, filtrar_modelo
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Lista de postagem
@@ -75,6 +75,7 @@ def lista_postagem_forum(request):
     
     context = {'page_obj': page_obj, 'form_dict': form_dict}
     return render(request, template_view, context)
+
 
 
 # Form de criar postagem

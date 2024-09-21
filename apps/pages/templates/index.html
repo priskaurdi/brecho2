@@ -2,18 +2,13 @@
 {% block title %}BrechóSim{% endblock %}
 
 {% block content %}
-
-{% for bloco in blocos %}
-
-	{% include "components/slide.html" %}
-	{% include "components/banner.html" %}
-	{% include "components/cards.html" %}
-	{% include "components/faq.html" %}
-	{% include "components/contato.html" %}
-	{% include "components/depoimentos.html" %}
-	{% include "components/footer.html" %}
-	{% include "components/indices.html" %}
-
-{% endfor %}
-
+    {% for bloco in blocos %}
+        {% include "components/slide.html" %}
+        {% include "components/banner.html" %}
+        {% include "components/cards.html" %}
+        {% include "components/faq.html" %}
+        {% include "components/contato.html" %}
+        {% include "components/depoimentos.html" %}
+    {% endfor %}
+    {% include "components/footer.html" %}
 {% endblock %}
