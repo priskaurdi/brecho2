@@ -2,7 +2,7 @@ from django.shortcuts import render
 from pages.models import Blocos, Pagina
 
 # Create your views here.
-def home(request):
+def index(request):
     return render(request, 'index.html')
 
 
