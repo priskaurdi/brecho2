@@ -1,5 +1,6 @@
+{% load static %}
 {% if bloco.bloco.nome == 'BANNER_1' %}
-<section>
+<section id="pricing" class="bg-cor mt-4">
     <div class="container py-lg-5">
         <div class="row">
             {% for banner_1 in bloco.conteudo.all %} 
@@ -34,10 +35,10 @@
 {% endif %}
 
 {% if bloco.bloco.nome == 'BANNER_2' %}
-<section>
+<section id="topics">
     {% for banner_2 in bloco.conteudo.all %}
     <div class="banner" style="background-image: url('{{banner_2.imagem.url}}');">
-        <div class="container">
+        <div class="container py-lg-4">
             <div class="row justify-content-center align-items-center">
                 <div class="col text-center">
                     <span>{{banner_2.titulo_2|default:""}}</span>
@@ -61,7 +62,7 @@
 {% endif %}
 
 {% if bloco.bloco.nome == 'BANNER_3' %}
-<section>
+<section id="reviews" class="bg-cor">
     <div class="container py-lg-5">
         <div class="row">
             {% for banner_3 in bloco.conteudo.all %}  
@@ -97,7 +98,7 @@
 {% endif %}
 
 {% if bloco.bloco.nome == 'BANNER_4' %}
-<section>
+<section class="bg-light">
     {% for banner_4 in bloco.conteudo.all %}
     <div class="banner" style="background-image: url('{{banner_4.imagem.url}}');">
         <div class="container py-lg-5">
@@ -148,31 +149,23 @@
 {% if bloco.bloco.nome == 'BANNER_5' %}
 <section>
     {% for banner_2 in bloco.conteudo.all %}
-    <div class="banner" style="background-image: url('{{banner_2.imagem.url}}');">
-        <div class="container">
-            <div class="row">
-                <!-- Conteúdo alinhado à direita -->
-                <div class="col-md-6 offset-md-6 d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h2 class="fw-bold">{{banner_2.titulo_1|default:""}}</h2>
-                        <!-- Adiciona mais espaço abaixo do subtítulo -->
-                        <span class="fw-semibold mb-3 d-block">{{banner_2.titulo_2|default:""}}</span>
-                        <p class="mt-3 mb-3 $green-500">{{banner_2.descricao_1|default:""}}</p>
-                        <p>{{banner_2.descricao_2|default:""}}</p>
-                        <p class="mb-0">
-                            {% if banner_2.titulo_botao_1 %}
-                            <a href="{% url ''|add:banner_2.rota_botao_1|add:'' %}" class="btn btn-primary py-3 px-4">{{banner_2.titulo_botao_1}}</a>
-                            {% endif %}
-                            {% if banner_2.titulo_botao_2 %}
-                            <a href="{% url ''|add:banner_2.rota_botao_2|add:'' %}" class="btn btn-primary py-3 px-4">{{banner_2.titulo_botao_2}}</a>
-                            {% endif %}
-                        </p>
-                    </div>
+    <div class="banner" >
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-4 text-center text-md-start">
+                    <h1>
+                        <div class="display-2" style="color: #813baa;">BrechóSim</div>
+                        <div class="display-5 text-muted">Moda Sustentável</div>
+                    </h1>
+                    <p class="lead my-4 text-muted">Diga sim à moda de reuso, o planeta e seu bolso agradecem.</p>
+                    <p class="lead my-4" style="color: #333;">Seja bem vinda! Estamos muito felizes em recebê-la!</p>
+                </div>
+                <div class="col-md-4 text-center d-none d-md-block">
+                    <img src="/static/images/BrechóSim.gif" alt="BrechoSimAnimacao" width="600">
                 </div>
             </div>
-        </div>
     </div> 
     {% endfor %}
 </section>
 {% endif %}
+
 

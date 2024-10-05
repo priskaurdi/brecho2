@@ -1,10 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-	
-    {% include "components/head.html" %}
-	
+<head>	
+    {% include "components/head.html" %}	
 </head>
 <body>
 	{% include 'components/navbar.html' %}
@@ -12,11 +10,9 @@
 	{% include 'components/message.html' %} 
 
     <a class="whatsapp-link" href="https://wa.me/5511968669243" target="_blank">
-        <i class="fa fa-whatsapp"> </i>
-        <img src="static/images/images/whatsapp.png" alt="whatsapp-link" />
+        <i class="fab fa-whatsapp fa-2x"> </i>
     </a>
     
-
 	{% block content %}{% endblock %}
 
 	{% include 'components/scripts.html' %}
@@ -25,12 +21,9 @@
     <script> 
         document.addEventListener("DOMContentLoaded", function () {
             const formRemocao = document.getElementById("form-remocao");
-    
             formRemocao.addEventListener("submit", function (event) {
                 event.preventDefault(); // Impede o envio padrão do formulário
-    
                 const confirmacao = confirm("Tem certeza de que deseja remover o comentário?");
-    
                 if (confirmacao) {
                     // Se o usuário confirmar, envie o formulário
                     formRemocao.submit();
