@@ -7,6 +7,7 @@ from .models import PagamentoPIX
 from django.shortcuts import render, redirect
 from catalogo.models import Catalogo
 from quadros.models import Quadros
+from .mercadopago_helper import gerar_link_pagamento
 
 
 
@@ -45,6 +46,22 @@ def pix_webhook(request):
     return JsonResponse({"error": "Method not allowed"}, status=405)
 
 
+# apps/pagamentos/views.py
+
+@csrf_exempt
+def mercadopago_webhook(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        # Aqui você pode processar o pagamento, verificando o status e outros detalhes.
+        # A documentação da Mercado Pago explica o que será enviado no webhook.
+
+        return JsonResponse({"status": "success"}, status=200)
+    
+    return JsonResponse({"error": "Método não permitido"}, status=405)
+
+
+
 @login_required
 def pagamentos_historico(request):
     pagamentos = PagamentoPIX.objects.filter(user=request.user)
@@ -63,24 +80,34 @@ def pagamento_confirmado(request, pagamento_id):
 @login_required
 def processar_pagamento(request, item_id, tipo_item):
     # Verificar se o item é um produto ou um quadro
-    if tipo_item == 'produto':
-        item = Catalogo.objects.get(id=item_id)
-        valor = item.valor
-    elif tipo_item == 'quadro':
-        item = Quadros.objects.get(id=item_id)
-        valor = item.valor
-    else:
-        return render(request, 'pagamento_erro.html', {'mensagem': 'Tipo de item inválido'})
+    try:
+        if tipo_item == 'produto':
+            item = get_object_or_404(Catalogo, id=item_id)
+            valor = item.valor
+        elif tipo_item == 'quadro':
+            item = get_object_or_404(Quadros, id=item_id)
+            valor = item.valor
+        else:
+            return render(request, 'pagamento_erro.html', {'mensagem': 'Tipo de item inválido'})
 
-    # Criar um pagamento pendente
-    pagamento = PagamentoPIX.objects.create(
-        usuario=request.user,
-        chave_pix="chave_pix_exemplo",  # Esta chave seria dinâmica com base na lógica de pagamento real
-        valor_total=valor,
-        status='pendente',
-        produto=item if tipo_item == 'produto' else None,
-        quadro=item if tipo_item == 'quadro' else None
-    )
+        # Criar um pagamento pendente no banco de dados
+        pagamento = PagamentoPIX.objects.create(
+            usuario=request.user,
+            chave_pix="chave_pix_exemplo",  # Esta chave seria dinâmica com base na lógica de pagamento real
+            valor_total=valor,
+            status='pendente',
+            produto=item if tipo_item == 'produto' else None,
+            quadro=item if tipo_item == 'quadro' else None
+        )
 
-    # Redirecionar para uma página de confirmação ou para a etapa seguinte do pagamento
-    return redirect('pagamento_confirmado', pagamento_id=pagamento.id)
+        # Gerar o link de pagamento do Mercado Pago
+        link_pagamento = gerar_link_pagamento(item, tipo_item, request.user)
+
+        # Redirecionar para o link de pagamento gerado
+        return redirect(link_pagamento)
+    
+    except Catalogo.DoesNotExist:
+        return render(request, 'pagamento_erro.html', {'mensagem': 'Produto não encontrado'})
+    
+    except Quadros.DoesNotExist:
+        return render(request, 'pagamento_erro.html', {'mensagem': 'Quadro não encontrado'})

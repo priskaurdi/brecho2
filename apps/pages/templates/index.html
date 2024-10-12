@@ -9,6 +9,10 @@
         {% include "components/faq.html" %}
         {% include "components/contato.html" %}
         {% include "components/depoimentos.html" %}
+
+        <a href="{% url 'processar_pagamento' item_id=1 tipo_item='produto' %}">Comprar com Mercado Pago</a>
+
+
     {% endfor %}
     {% include "components/footer.html" %}
 {% endblock %}

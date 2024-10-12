@@ -276,6 +276,10 @@ MESSAGE_TAGS = {
 	constants.INFO: 'alert-info',
 }
 
+# settings.py
+
+MERCADO_PAGO_ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'
+MERCADO_PAGO_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
 
 
 

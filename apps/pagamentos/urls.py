@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import pagamentos_historico, pagamento_detalhes, pagamento_confirmado, pix_webhook, processar_pagamento
+from .views import pagamentos_historico, pagamento_detalhes, pagamento_confirmado, pix_webhook, processar_pagamento, mercadopago_webhook
 
 urlpatterns = [
     path('webhook/pix/', pix_webhook, name='pix_webhook'),
@@ -7,4 +7,7 @@ urlpatterns = [
     path('pagamentos/<int:pagamento_id>/', pagamento_detalhes, name='pagamento_detalhes'),
     path('pagamento-confirmado/<int:pagamento_id>/', pagamento_confirmado, name='pagamento_confirmado'),
     path('processar-pagamento/<int:item_id>/<str:tipo_item>/', processar_pagamento, name='processar_pagamento'),
+    # apps/pagamentos/urls.py
+    path('webhook/mercadopago/', mercadopago_webhook, name='mercadopago_webhook'),
+
 ]
